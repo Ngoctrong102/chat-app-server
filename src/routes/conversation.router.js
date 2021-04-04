@@ -4,6 +4,6 @@ var ConversationController = require('../controllers/Conversation.Controller');
 
 const checkAuth = require('../middleware/checkAuth');
 
-router.get('/', checkAuth, ConversationController.getConversation)
+router.post('/', checkAuth, ConversationController.getConversation)
 
 module.exports = router;

@@ -45,7 +45,8 @@ module.exports = {
                     user: userData,
                     token: jwt.sign(userData, SECRET_CODE),
                     friends: user.friends,
-                    reqFriends: user.reqFriends
+                    reqFriends: user.reqFriends,
+                    conversations: user.conversations
                 })
             } else {
                 res.json({ status: "Error", message: "Email or password is incorect" });

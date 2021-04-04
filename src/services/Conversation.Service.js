@@ -2,24 +2,17 @@ const Conversation = require("../models/Conversation.Model");
 const User = require("../models/User.Model");
 
 class ConversationService {
-    async getConversation(userID, friendID) {
-        var conversation = await Conversation.findOne({
-                $or: [
-                    { users: [userID, friendID] },
-                    { users: [friendID, userID] }
-                ]
-            })
+    async getConversation(users) {
+        users.sort();
+        var conversation = await Conversation.findOne({ users })
             .populate('users', ['_id', 'username', 'avatar'])
             .populate('messages.user', ['_id', 'username', 'avatar'])
         if (conversation) return conversation;
         else {
             return {
-                _id: 'NOT_EXIST' + userID + friendID,
+                _id: 'NOT_EXIST' + users.join(''),
                 users: await User.find({
-                    $or: [
-                        { _id: userID },
-                        { _id: friendID }
-                    ]
+                    _id: { $in: users }
                 }, ['username', 'avatar', '_id']),
                 messages: []
             }
@@ -28,6 +21,7 @@ class ConversationService {
 
     }
     async createConversation(users, message) {
+        users.sort();
         var conversation = await Conversation({ users, messages: [message] }).save();
         conversation = await conversation.populate('users', ['_id', 'username', 'avatar']).populate('messages.user', ['_id', 'username', 'avatar']).execPopulate();
         return conversation;

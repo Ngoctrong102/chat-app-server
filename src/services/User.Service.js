@@ -8,7 +8,17 @@ class UserService {
         return user;
     }
     async login(email, password) {
-        var user = await User.findOne({ email }).populate('friends', ['username', 'avatar', '_id']).populate('reqFriends', ['username', 'avatar', '_id']).exec();
+        var user = await User.findOne({ email })
+            .populate('friends', ['username', 'avatar', '_id'])
+            .populate('reqFriends', ['username', 'avatar', '_id'])
+            .populate({
+                path: 'conversations',
+                populate: [
+                    { path: 'users', select: ['username', 'avatar', '_id'] },
+                    { path: 'messages.user', select: ['username', 'avatar', '_id'] }
+                ]
+            })
+            .exec();
         if (user && checkPassword(password, user.password)) return user;
         else return null;
     }
