@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const env = require('dotenv').config()
 
 const app = express();
 const server = require('http').createServer(app);
@@ -13,7 +14,7 @@ global.__basedir = __dirname;
 
 const io = require('socket.io')(server, {
     cors: {
-        origins: ["http://localhost:3000", "http://192.168.0.104:3000"],
+        origin: process.env.ORIGIN,
         methods: ["GET", "POST"]
     }
 });
@@ -35,12 +36,12 @@ io.use(function(socket, next) {
 require('./src/socketio/listeners')(io);
 
 
-const PORT = process.env.PORT || 8888;
+const PORT = process.env.PORT;
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(cors({
-    origins: ["http://localhost:3000", "http://192.168.0.104:3000"],
+    origin: process.env.ORIGIN,
     optionsSuccessStatus: 200
 }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
