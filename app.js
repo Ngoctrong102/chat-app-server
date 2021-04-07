@@ -52,6 +52,7 @@ peerServer.use(cors({
     optionsSuccessStatus: 200
 }));
 app.use('/peerServer', peerServer)
+app.use('/getICEServer', require('./src/routes/ICEServer.router'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(parseUser);
@@ -62,13 +63,3 @@ app.use('/conversation', require('./src/routes/conversation.router'))
 server.listen(PORT, () => {
     console.log('Listening at port ' + PORT);
 })
-
-
-// var ExpressPeerServer = require('peer').ExpressPeerServer;
-// var peerExpress = require('express');
-// var peerApp = peerExpress();
-// var peerServer = require('http').createServer(peerApp);
-// var peerPort = 9000;
-
-// peerApp.use(ExpressPeerServer(peerServer, { debug: true }));
-// peerServer.listen(peerPort);
