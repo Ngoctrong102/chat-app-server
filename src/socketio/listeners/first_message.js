@@ -8,7 +8,5 @@ module.exports = socket => {
             await User.addConversation(conversation);
             first_message(socket, { oldID: conversationID, conversation })
         }
-        // req_add_friend(socket, data);
-        // console.log(data);
     })
 }

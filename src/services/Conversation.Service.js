@@ -34,6 +34,9 @@ class ConversationService {
         var res = await Conversation.findOne({ _id: conversationID }, 'users');
         return res ? res.users : false;
     }
+    async getConversationById(id) {
+        return await (await Conversation.findById(id).select(['users', '_id']).populate('users', ['_id', 'username', 'avatar'])).execPopulate();
+    }
 }
 
 module.exports = new ConversationService();
