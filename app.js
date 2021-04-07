@@ -46,9 +46,8 @@ app.use(cors({
 }));
 
 
-// var peerServer = require('peer').ExpressPeerServer(server)
-// peerServer.on('connection', (client) => console.log('peer', client))
-// app.use('/peerServer', peerServer)
+var peerServer = require('peer').ExpressPeerServer(server)
+app.use('/peerServer', peerServer)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(parseUser);
@@ -61,11 +60,11 @@ server.listen(PORT, () => {
 })
 
 
-var ExpressPeerServer = require('peer').ExpressPeerServer;
-var peerExpress = require('express');
-var peerApp = peerExpress();
-var peerServer = require('http').createServer(peerApp);
-var peerPort = 9000;
+// var ExpressPeerServer = require('peer').ExpressPeerServer;
+// var peerExpress = require('express');
+// var peerApp = peerExpress();
+// var peerServer = require('http').createServer(peerApp);
+// var peerPort = 9000;
 
-peerApp.use(ExpressPeerServer(peerServer, { debug: true }));
-peerServer.listen(peerPort);
+// peerApp.use(ExpressPeerServer(peerServer, { debug: true }));
+// peerServer.listen(peerPort);
