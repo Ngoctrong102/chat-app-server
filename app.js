@@ -2,7 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const env = require('dotenv').config()
+const env = require('dotenv').config();
+require('events').EventEmitter.defaultMaxListeners = 30;
 
 const app = express();
 const server = require('http').createServer(app);
