@@ -46,12 +46,12 @@ app.use(cors({
 }));
 
 
-var peerServer = require('peer').ExpressPeerServer(server)
-peerServer.use(cors({
-    origin: process.env.ORIGIN,
-    optionsSuccessStatus: 200
-}));
-app.use('/peerServer', peerServer)
+// var peerServer = require('peer').ExpressPeerServer(server)
+// peerServer.use(cors({
+//     origin: process.env.ORIGIN,
+//     optionsSuccessStatus: 200
+// }));
+// app.use('/peerServer', peerServer)
 app.use('/getICEServer', require('./src/routes/ICEServer.router'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
